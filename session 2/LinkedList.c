@@ -12,6 +12,8 @@ typedef struct node {
 void insertFront(NodePtr *list, Type item);
 NodePtr insertFront2(NodePtr list, Type item);
 void insertRear(NodePtr *list, Type item);
+void insertRear2(NodePtr *list, Type item);
+void deleteItem(NodePtr *list, Type item);
 void deleteFront(NodePtr *list);
 void deleteRear(NodePtr *list);
 void display(NodePtr list);
@@ -49,6 +51,47 @@ NodePtr insertFront2(NodePtr list, Type item) {
     }
 
     return temp;
+}
+//pointer to a pointer to a node
+void insertRear(NodePtr *list, Type item) {
+    NodePtr *current;
+    NodePtr temp = (NodePtr) malloc(sizeof(NodeType));
+
+    if(temp != NULL) {
+        for(current = list; *current != NULL; current = &(*current)->next) {}
+        temp->next = NULL;
+        *current = temp;
+        temp->data = item;
+    }
+}
+//pointer to a node
+void insertRear2(NodePtr *list, Type item) {
+    NodePtr current;
+    NodePtr temp = (NodePtr) malloc(sizeof(NodeType));
+
+    if(temp != NULL) {
+        for(current = *list; current != NULL && current->next != NULL; current = current->next) {}
+        temp->next = NULL;
+        temp->data = item;
+        if(current == NULL) {
+            *list = temp;
+        } else {
+            current->next = temp;
+        }
+    }
+}
+
+void deleteItem(NodePtr *list, Type item) {
+    NodePtr *current, temp;
+
+    if(*list != NULL) {
+        for(current = list; *current != NULL && (*current)->data != item; current = &(*current)->next) {}
+        if(*current != NULL) {
+            temp = *current;
+            *current = temp->next; // *current = (*current)->next
+            free(temp);
+        }
+    }  
 }
 
 void display(NodePtr list) {
