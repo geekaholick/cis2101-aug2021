@@ -11,5 +11,4 @@ typedef struct {
 
 Person createPerson(String name, char sex, String city);
 void displayPersonInfo(Person p);
-    // {name | sex | city}
 #endif
